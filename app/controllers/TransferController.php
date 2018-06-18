@@ -50,48 +50,64 @@ class TransferController extends Controller {
      */
     public function add()
     {
-        if (isset($_POST['upload']) && !empty($_POST['exp_email']) && !empty($_POST['dest_email']) && !empty($_FILES['uploadFile'])) {
-          $transfer = new Transfer();
-          $transfer->exp_email = $_POST['exp_email'];
-          $transfer->dest_email = $_POST['dest_email'];
-          $file = $_FILES['uploadFile']['name'];
+        if(isset($_POST['upload']) && !empty($_POST['exp_email']) && !empty($_POST['dest_email']) && !empty($_FILES['uploadFile'])) {
+            $transfer = new Transfer();
+            $transfer->exp_email = $_POST['exp_email'];
+            $transfer->dest_email = $_POST['dest_email'];
+            $file = $_FILES['uploadFile']['name'];
 
-          $path = 'app/transfers/';
+            $path = 'app/transfers/';
+            $size_max = 10;
+            $size_file = filesize($_FILES['uploadFile']['tmp_name']);
 
-          if (move_uploaded_file($_FILES['uploadFile']['tmp_name'], $path.$file)) {
-            $transfer->path = $file;
-            $transfer->message = $_POST['message'];
+            if ($size_file <= $size_max) {
 
-            $transfer->save();
+               if(move_uploaded_file($_FILES['uploadFile']['tmp_name'], $path.$file)){
+                $transfer->path = $file;
+                $transfer->message = $_POST['message'];
 
-            $path .= $transfer->id;
-            $id = $transfer->id;
+                $transfer->save();
 
-            $this->flashbag->set('alert', [
-                'type' => 'success',
-                'msg' => 'transfer added youhou !'
-            ]);
-            //$this->url->redirect('');
-            echo $this->twig->render('transfers/result.html.twig',[
-                'file' => $file,
-                'path' => $path,
-                'id' => $id,
-                'dest_email' => $_POST['dest_email']
-            ]);
+                $id = $transfer->id;
+                $fakeId = rand(100000,900000);
+                $fake= $fakeId.$id;
+
+                $this->flashbag->set('alert', [
+                    'type' => 'success',
+                    'msg' => 'transfer added youhou !'
+                ]);
+
+                echo $this->twig->render('transfers/result.html.twig',[
+                    'file' => $file,
+                    'fake' => $fake,
+                    'dest_email' => $_POST['dest_email']
+                ]);
+                }else{            
+                    $this->flashbag->set('alert', [
+                        'type' => 'danger',
+                        'msg' => 'upload failed'
+                    ]);
+                    $this->url->redirect(''); 
+                }
+            }else{
+                 $this->flashbag->set('alert', [
+                        'type' => 'danger',
+                        'msg' => 'file size not allowed'
+                    ]);
+                    $this->url->redirect(''); 
+            }
         }else{
-            die();
-        }
-    }else{
-        $this->flashbag->set('alert', [
-            'type' => 'danger',
-            'msg' => 'Please fill all the fields'
-        ]);
-            $this->url->redirect('');
-        }
+            $this->flashbag->set('alert', [
+                    'type' => 'danger',
+                    'msg' => 'Please fill all the fields'
+                ]);
+                $this->url->redirect('');
+        }         
     }
 
     public function download($id)
     {
+        $id = substr($id, 6);
         $transfer = Transfer::findOne([
             'id' => $id
         ]);
@@ -103,10 +119,10 @@ class TransferController extends Controller {
         header('Content-Type:'.$mime.'');
         header('Content-Disposition: attachment; filename='.basename($file));
         header('Content-Transfer-Encoding: binary');
-        // header('Expires: 0');
-        // header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        // header('Pragma: public');
-        // header('Content-Length: '.$file);
+                // header('Expires: 0');
+                // header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                // header('Pragma: public');
+                // header('Content-Length: '.$file);
         ob_clean();
         flush();
         readfile($file);
