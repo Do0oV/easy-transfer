@@ -82,32 +82,36 @@ class TransferController extends Controller {
             die();
         }
     }else{
-        $this->url->redirect('');
+        $this->flashbag->set('alert', [
+            'type' => 'danger',
+            'msg' => 'Please fill all the fields'
+        ]);
+            $this->url->redirect('');
+        }
     }
-}
 
-public function download($id)
-{
-    $transfer = Transfer::findOne([
-        'id' => $id
-    ]);
-    $file = dirname(__FILE__,2).'/transfers/'.$transfer->path;
-    var_dump($file);
-    $mime = mime_content_type($file);
-    var_dump($mime); 
-    header('Content-Description: File Transfer');
-    header('Content-Type:'.$mime.'');
-    header('Content-Disposition: attachment; filename='.basename($file));
-    header('Content-Transfer-Encoding: binary');
+    public function download($id)
+    {
+        $transfer = Transfer::findOne([
+            'id' => $id
+        ]);
+        $file = dirname(__FILE__,2).'/transfers/'.$transfer->path;
+        var_dump($file);
+        $mime = mime_content_type($file);
+        var_dump($mime); 
+        header('Content-Description: File Transfer');
+        header('Content-Type:'.$mime.'');
+        header('Content-Disposition: attachment; filename='.basename($file));
+        header('Content-Transfer-Encoding: binary');
         // header('Expires: 0');
         // header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         // header('Pragma: public');
         // header('Content-Length: '.$file);
-    ob_clean();
-    flush();
-    readfile($file);
-    exit;
+        ob_clean();
+        flush();
+        readfile($file);
+        exit;
 
 
-}
+    }
 }
