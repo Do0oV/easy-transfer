@@ -122,8 +122,6 @@ class TransferController extends Controller {
         ]);
         $fake_file = dirname(__FILE__,2).'/transfers/'.$transfer->fake_path;
         $file = $transfer->path;
-
-        var_dump($file);
         $mime = mime_content_type($fake_file);
         var_dump($mime); 
         header('Content-Description: File Transfer');
@@ -136,9 +134,8 @@ class TransferController extends Controller {
                 // header('Content-Length: '.$file);
         ob_clean();
         flush();
-        readfile($file);
+        readfile($fake_file);
         exit;
-
 
     }
 }
