@@ -3,7 +3,7 @@
   controller: Controllers\TransferController::add
 
 - path: 
-  - /download
+  - /download/(\d+)
   controller: Controllers\TransferController::download
   
 - path:
