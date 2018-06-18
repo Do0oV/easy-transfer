@@ -56,14 +56,23 @@ class TransferController extends Controller {
             $transfer->dest_email = $_POST['dest_email'];
             $file = $_FILES['uploadFile']['name'];
 
+            $ext = pathinfo($_FILES['uploadFile']['name'], PATHINFO_EXTENSION);
+            $fake_file = uniqid().'.'.$ext;
+
+            
+            var_dump($fake_file);
+            var_dump($file);
+
+
             $path = 'app/transfers/';
-            $size_max = 10;
+            $size_max = 524288000;
             $size_file = filesize($_FILES['uploadFile']['tmp_name']);
 
             if ($size_file <= $size_max) {
 
-               if(move_uploaded_file($_FILES['uploadFile']['tmp_name'], $path.$file)){
+               if(move_uploaded_file($_FILES['uploadFile']['tmp_name'], $path.$fake_file)){
                 $transfer->path = $file;
+                $transfer->fake_path = $fake_file;
                 $transfer->message = $_POST['message'];
 
                 $transfer->save();
@@ -111,9 +120,11 @@ class TransferController extends Controller {
         $transfer = Transfer::findOne([
             'id' => $id
         ]);
-        $file = dirname(__FILE__,2).'/transfers/'.$transfer->path;
+        $fake_file = dirname(__FILE__,2).'/transfers/'.$transfer->fake_path;
+        $file = $transfer->path;
+
         var_dump($file);
-        $mime = mime_content_type($file);
+        $mime = mime_content_type($fake_file);
         var_dump($mime); 
         header('Content-Description: File Transfer');
         header('Content-Type:'.$mime.'');
