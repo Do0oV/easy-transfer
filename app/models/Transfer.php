@@ -17,7 +17,7 @@ class Transfer extends \PicORM\Model
         'message',
         'creation_date'
     );
-
+    public $id;
     public $exp_email;
     public $dest_email;
     public $path;

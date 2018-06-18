@@ -6,10 +6,11 @@
     <div class="jumbotron">
         <p>You sent: {{ file }}</p>
         <p>To: {{ dest_email }}</p>
-        <p>To: {{ id }}</p>
+        <p>To: {{ path }}</p>
         <p>Download link: </p>
         {# put a button #}
-        <p><a href="{{ url('app/transfers/') ~ file}}">{{ url('app/transfers/') ~ file}}</a></p>
+        <p><a href="{{ url('app/download/') ~ id}}">{{ url('app/download/') ~ id}}</a></p>
+
 
 
     </div>

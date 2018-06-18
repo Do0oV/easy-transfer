@@ -1,6 +1,10 @@
 - path: 
   - /add
   controller: Controllers\TransferController::add
+
+- path: 
+  - /download
+  controller: Controllers\TransferController::download
   
 - path:
     - 
