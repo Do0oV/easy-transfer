@@ -1,3 +1,7 @@
+# - path: 
+#   - /grab
+#   controller: Controllers\TransferController::grabFile
+
 - path: 
   - /add
   controller: Controllers\TransferController::add

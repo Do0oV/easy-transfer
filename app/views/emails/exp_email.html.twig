@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <title>{% block title %}Title{% endblock %}</title>
+</head>
+
+<body>
+
+
+    <div class="container">
+
+
+        {% block content %}
+
+
+        <div align="center">
+
+            You sent: {{ file }} ( {{ size }})<br>
+            To: {{ dest_email}}<br>
+            Here is the direct downoad link:
+            <a href="{{ url('/download/') ~ id}}">download</a><br>
+
+        </div>
+
+
+
+        {% endblock %}
+
+    </div>
+
+
+</body>
+</html>

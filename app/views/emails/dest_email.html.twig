@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <title>{% block title %}Title{% endblock %}</title>
+</head>
+
+<body>
+
+
+    <div class="container">
+
+
+        {% block content %}
+
+
+        <div align="center">
+
+            {{ exp_email }}<br>
+            sends you: {{ file }} ( {{ size }})<br>
+            <a href="{{ url('/download/') ~ id}}">download</a><br>
+
+        </div>
+
+
+
+        {% endblock %}
+
+    </div>
+
+
+</body>
+</html>
