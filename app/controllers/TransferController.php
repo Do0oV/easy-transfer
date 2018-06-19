@@ -43,14 +43,15 @@ class TransferController extends Controller {
                 $id = $transfer->id;
                 $exp_email = $transfer->exp_email;
                 $dest_email = $transfer->dest_email;
+                $message = $transfer->message;
 
                 
                 $id = $transfer->id;
                 $fakeId = rand(100000,900000);
                 $fake= $fakeId.$id;
 
-                $this->sendeMailDest($exp_email, $dest_email, $file, $size_file, $fake);
-                $this->sendeMailExp($exp_email, $dest_email, $file, $size_file, $fake);
+                $this->sendeMailDest($exp_email, $dest_email, $file, $this::formatBytes($size_file), $fake, $message);
+                $this->sendeMailExp($exp_email, $dest_email, $file, $this::formatBytes($size_file), $fake, $message);
 
                 $this->flashbag->set('alert', [
                     'type' => 'success',
@@ -107,7 +108,7 @@ class TransferController extends Controller {
 
     }
 
-    public function sendeMailDest($exp_email, $dest_email, $file, $size_file, $fake){
+    public function sendeMailDest($exp_email, $dest_email, $file, $size_file, $fake, $message){
 
         $to         = $dest_email;
         $headers    = 'From: "contact" <info@easytransfer.com>' . "\r\n";
@@ -121,14 +122,15 @@ class TransferController extends Controller {
             'dest_email' => $dest_email,
             'file' => $file,
             'size' => $size_file,
-            'id' => $fake
+            'id' => $fake,
+            'message' => $message
 
         ]);
             //uncomment to send by email
-            //mail($to, $subject, $bodyHtml, $headers);
+            mail($to, $subject, $bodyHtml, $headers);
     }
     
-    private function sendeMailExp($exp_email, $dest_email, $file, $size_file, $fake){
+    private function sendeMailExp($exp_email, $dest_email, $file, $size_file, $fake, $message){
 
         $to         = $exp_email;
         $headers    = 'From: "contact" <info@easytransfer.com>' . "\r\n";
@@ -142,11 +144,12 @@ class TransferController extends Controller {
             'dest_email' => $dest_email,
             'file' => $file,
             'size' => $size_file,
-            'id' => $fake
+            'id' => $fake,
+            'message' => $message
 
         ]);
             //uncomment to send by email
-            //mail($to, $subject, $bodyHtml, $headers);
+            mail($to, $subject, $bodyHtml, $headers);
     }
 
     public function grabFile($id){
