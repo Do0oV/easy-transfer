@@ -1,6 +1,3 @@
-# - path: 
-#   - /grab
-#   controller: Controllers\TransferController::grabFile
 
 - path: 
   - /add
@@ -9,7 +6,11 @@
 - path: 
   - /download/(\d+)
   controller: Controllers\TransferController::download
-  
+
+- path: 
+  - /file/(\d+)
+  controller: Controllers\TransferController::grabFile
+    
 - path:
     - 
   controller: Controllers\TransferController::index

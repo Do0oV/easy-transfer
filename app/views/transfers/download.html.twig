@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %} 
+
+{% block content %}
+    <h1>Download your file</h1>
+
+    <div class="jumbotron">
+        <p>{{ dest_email }}</p>
+        <p>Sent you: {{ file }} </p>
+        <p>Download link: </p>
+        {# put a button #}
+        <p><a href="{{ url('download/') ~ fake}}">{{ url('download/') ~ fake}}</a></p>
+    </div>
+
+    
+{% endblock %}

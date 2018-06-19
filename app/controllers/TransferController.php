@@ -147,7 +147,21 @@ class TransferController extends Controller {
             //uncomment to send by email
             //mail($to, $subject, $bodyHtml, $headers);
     }
-    // public function grabFile($id){
-        
-    // }
+
+    public function grabFile($id){
+
+        $fake = $id;
+        $id = substr($id, 6);
+        $transfer = Transfer::findOne([
+            'id' => $id
+        ]);
+
+        echo $this->twig->render('transfers/download.html.twig',[
+            'exp_email' => $transfer->exp_email,
+            'file' => $transfer->path,
+            'fake' => $fake,
+            'message' =>$transfer->message
+        ]);
+    }
+
 }
