@@ -59,7 +59,8 @@ class TransferController extends Controller {
                 echo $this->twig->render('transfers/result.html.twig',[
                     'file' => $file,
                     'fake' => $fake,
-                    'dest_email' => $_POST['dest_email']
+                    'dest_email' => $_POST['dest_email'],
+                    'size' => $this::formatBytes($size_file)
                 ]);
 
                 }else{            
@@ -155,13 +156,24 @@ class TransferController extends Controller {
         $transfer = Transfer::findOne([
             'id' => $id
         ]);
+        $pathtofile = 'app/transfers/'.$transfer->fake_path;
+
 
         echo $this->twig->render('transfers/download.html.twig',[
             'exp_email' => $transfer->exp_email,
             'file' => $transfer->path,
             'fake' => $fake,
-            'message' =>$transfer->message
+            'message' => $transfer->message,
+            'size' => $this::formatBytes(filesize($pathtofile))
+
         ]);
+    }
+
+    public function formatBytes($size, $precision = 2)
+    {
+        $base = log($size, 1024);
+        $suffixes = array('octets', 'Ko', 'Mo', 'Go', 'To');   
+        return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
     }
 
 }

@@ -4,9 +4,8 @@
     <h1>Success</h1>
 
     <div class="jumbotron">
-        <p>You sent: {{ file }}</p>
+        <p>You sent: {{ file }} (Size: {{ size }} ) </p>
         <p>To: {{ dest_email }}</p>
-        <p>To: {{ path }}</p>
         <p>Download link: </p>
         {# put a button #}
         <p><a href="{{ url('download/') ~ fake}}">{{ url('download/') ~ fake}}</a></p>

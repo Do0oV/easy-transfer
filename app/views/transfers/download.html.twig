@@ -5,7 +5,7 @@
 
     <div class="jumbotron">
         <p>{{ dest_email }}</p>
-        <p>Sent you: {{ file }} </p>
+        <p>Sent you: {{ file }}(Size: {{ size }} ) </p>
         <p>Download link: </p>
         {# put a button #}
         <p><a href="{{ url('download/') ~ fake}}">{{ url('download/') ~ fake}}</a></p>
