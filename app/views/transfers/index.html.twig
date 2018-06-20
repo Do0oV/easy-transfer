@@ -17,11 +17,19 @@
                <textarea class="form-control" name="message" rows="3" placeholder="Votre message (facultatif)"></textarea>
             </div>
             <div class="col">
-                  <input type="file" name="uploadFile" class="form-control-file">
+                <div style="position:relative;">
+                    <a class='btn btn-secondary' href='javascript:;'>
+                        Parcourir...
+                    <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="uploadFile" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
+                    </a>
+                    &nbsp;
+                    <span class='label label-info' id="upload-file-info"></span>
+                </div>
             </div>
             <div class="col">
                 <input type="submit" name="upload" class="form-control btn-success" value="Envoyer">
             </div>
         </div>
     </form>
+
 {% endblock %}
