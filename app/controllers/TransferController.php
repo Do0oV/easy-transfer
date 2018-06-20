@@ -32,56 +32,66 @@ class TransferController extends Controller {
             $size_max = 524288000;
             $size_file = filesize($_FILES['uploadFile']['tmp_name']);
 
-            if ($size_file <= $size_max) {
+            if(filter_var($_POST['dest_email'], FILTER_VALIDATE_EMAIL) && filter_var($_POST['exp_email'], FILTER_VALIDATE_EMAIL)){
 
-               if(move_uploaded_file($_FILES['uploadFile']['tmp_name'], $path.$fake_file)){
-                $transfer->path = $file;
-                $transfer->fake_path = $fake_file;
 
-                $transfer->save();
+                if ($size_file <= $size_max) {
 
-                $id = $transfer->id;
-                $exp_email = $transfer->exp_email;
-                $dest_email = $transfer->dest_email;
-                $message = $transfer->message;
+                   if(move_uploaded_file($_FILES['uploadFile']['tmp_name'], $path.$fake_file)){
+                    $transfer->path = $file;
+                    $transfer->fake_path = $fake_file;
 
-                
-                $id = $transfer->id;
-                $fakeId = rand(100000,900000);
-                $fake= $fakeId.$id;
+                    $transfer->save();
 
-                $this->sendeMailDest($exp_email, $dest_email, $file, $this::formatBytes($size_file), $fake, $message);
-                $this->sendeMailExp($exp_email, $dest_email, $file, $this::formatBytes($size_file), $fake, $message);
+                    $id = $transfer->id;
+                    $exp_email = $transfer->exp_email;
+                    $dest_email = $transfer->dest_email;
+                    $message = $transfer->message;
 
-                $this->flashbag->set('alert', [
-                    'type' => 'success',
-                    'msg' => 'transfer added youhou !'
-                ]);
-                echo $this->twig->render('transfers/result.html.twig',[
-                    'file' => $file,
-                    'fake' => $fake,
-                    'dest_email' => $_POST['dest_email'],
-                    'size' => $this::formatBytes($size_file)
-                ]);
+                    
+                    $id = $transfer->id;
+                    $fakeId = rand(100000,900000);
+                    $fake= $fakeId.$id;
 
-                }else{            
+                    $this->sendeMailDest($exp_email, $dest_email, $file, $this::formatBytes($size_file), $fake, $message);
+                    $this->sendeMailExp($exp_email, $dest_email, $file, $this::formatBytes($size_file), $fake, $message);
+
                     $this->flashbag->set('alert', [
-                        'type' => 'danger',
-                        'msg' => 'upload failed'
+                        'type' => 'success',
+                        'msg' => 'Le transfert s\'est déroulé avec succès !'
                     ]);
-                    $this->url->redirect(''); 
+                    echo $this->twig->render('transfers/result.html.twig',[
+                        'file' => $file,
+                        'fake' => $fake,
+                        'dest_email' => $_POST['dest_email'],
+                        'size' => $this::formatBytes($size_file)
+                    ]);
+
+                    }else{            
+                        $this->flashbag->set('alert', [
+                            'type' => 'danger',
+                            'msg' => 'Echec du téléchargement'
+                        ]);
+                        $this->url->redirect(''); 
+                    }
+                }else{
+                     $this->flashbag->set('alert', [
+                        'type' => 'danger',
+                        'msg' => 'Fichier trop volumineux'
+                    ]);
+                     $this->url->redirect(''); 
                 }
             }else{
-                 $this->flashbag->set('alert', [
-                    'type' => 'danger',
-                    'msg' => 'file size not allowed'
+                $this->flashbag->set('alert', [
+                'type' => 'danger',
+                'msg' => 'Format email invalide'
                 ]);
-                 $this->url->redirect(''); 
-            }
-         }else{
+                $this->url->redirect('');
+                }
+        }else{
             $this->flashbag->set('alert', [
                 'type' => 'danger',
-                'msg' => 'Please fill all the fields'
+                'msg' => 'Merci de remplir tous les champs'
             ]);
             $this->url->redirect('');
         }         
@@ -98,7 +108,6 @@ class TransferController extends Controller {
         $mime = mime_content_type($fake_file);
         $filesize = filesize($fake_file);
 
-        //var_dump($filesize);die(); 
         header('Content-Description: File Transfer');
         header('Content-Type:'.$mime.'');
         header('Content-Disposition: attachment; filename='.basename($file));
@@ -121,7 +130,7 @@ class TransferController extends Controller {
         $headers    .= "Mime-Version: 1.0\n";
         $headers    .= "Content-Transfer-Encoding: 8bit\n";
         $headers    .= "Content-type: text/html; charset= utf-8\n";
-        $subject = 'No-reply Easy Transfer: download your file';
+        $subject = 'No-reply Easy Transfer: On vous invite à télécharger un fichier';
 
         $bodyHtml = $this->twig->parse('emails/dest_email.html.twig', [
             'exp_email' => $exp_email,
@@ -132,8 +141,8 @@ class TransferController extends Controller {
             'message' => $message
 
         ]);
-            //uncomment to send by email
-            mail($to, $subject, $bodyHtml, $headers);
+
+        mail($to, $subject, $bodyHtml, $headers);
     }
     
     private function sendeMailExp($exp_email, $dest_email, $file, $size_file, $fake, $message){
@@ -143,7 +152,7 @@ class TransferController extends Controller {
         $headers    .= "Mime-Version: 1.0\n";
         $headers    .= "Content-Transfer-Encoding: 8bit\n";
         $headers    .= "Content-type: text/html; charset= utf-8\n";
-        $subject = 'No-reply Easy Transfer: your file has been sent';
+        $subject = 'No-reply Easy Transfer: Votre invitation a été envoyée à '.$dest_email.'';
 
         $bodyHtml = $this->twig->parse('emails/exp_email.html.twig', [
             'exp_email' => $exp_email,
@@ -154,8 +163,7 @@ class TransferController extends Controller {
             'message' => $message
 
         ]);
-            //uncomment to send by email
-            mail($to, $subject, $bodyHtml, $headers);
+        mail($to, $subject, $bodyHtml, $headers);
     }
 
     public function grabFile($id){

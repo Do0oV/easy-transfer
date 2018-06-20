@@ -1,14 +1,15 @@
 {% extends "base.html.twig" %} 
 
 {% block content %}
-    <h1>Download your file</h1>
+    <h1>Titre</h1>
 
     <div class="jumbotron">
-        <p>{{ dest_email }}</p>
-        <p>Sent you: {{ file }}(Size: {{ size }} ) </p>
-        <p>Download link: </p>
-        {# put a button #}
-        <p><a href="{{ url('download/') ~ fake}}">{{ url('download/') ~ fake}}</a></p>
+        <p>{{ exp_email }}</p>
+        <p>vous invite à télécharger:</p>
+        <p>{{ file }}</p>
+        <p>Taille: {{ size }}</p>
+        <p>Cliquez ci-dessous pour télécharger le fichier: </p>
+        <a class="btn btn-primary" href="{{ url('download/') ~ fake}}" role="button">Télécharger</a>
     </div>
 
     

@@ -1,16 +1,15 @@
 {% extends "base.html.twig" %} 
 
 {% block content %}
-    <h1>Success</h1>
+    <h1>Titre</h1>
 
     <div class="jumbotron">
-        <p>You sent: {{ file }} (Size: {{ size }} ) </p>
-        <p>To: {{ dest_email }}</p>
-        <p>Download link: </p>
-        {# put a button #}
-        <p><a href="{{ url('download/') ~ fake}}">{{ url('download/') ~ fake}}</a></p>
-
-
+        <p>Le fichier: {{ file }}</p>
+        <p>Taille: {{ size }}</p>
+        <p>a été envoyé à:  {{ dest_email }}</p>
+        <p>Celui-ci a été averti par email.</p>
+        <p>Au cas où, voici le lien de téléchargement:</p>
+		<a class="btn btn-primary" href="{{ url('download/') ~ fake}}" role="button">Télécharger</a>
     </div>
 
     
