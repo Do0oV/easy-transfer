@@ -130,7 +130,7 @@ class TransferController extends Controller {
         $headers    .= "Mime-Version: 1.0\n";
         $headers    .= "Content-Transfer-Encoding: 8bit\n";
         $headers    .= "Content-type: text/html; charset= utf-8\n";
-        $subject = 'No-reply Easy Transfer: On vous invite à télécharger un fichier';
+        $subject = 'Easy Transfer: On vous invite à télécharger un fichier';
 
         $bodyHtml = $this->twig->parse('emails/dest_email.html.twig', [
             'exp_email' => $exp_email,
@@ -152,9 +152,9 @@ class TransferController extends Controller {
         $headers    .= "Mime-Version: 1.0\n";
         $headers    .= "Content-Transfer-Encoding: 8bit\n";
         $headers    .= "Content-type: text/html; charset= utf-8\n";
-        $subject = 'No-reply Easy Transfer: Votre invitation a été envoyée à '.$dest_email.'';
+        $subject = 'Easy Transfer: Votre invitation a été envoyée à '.$dest_email.'';
 
-        $bodyHtml = $this->twig->parse('emails/exp_email.html.twig', [
+        $bodyHtml = $this->twig->render('emails/exp_email.html.twig', [
             'exp_email' => $exp_email,
             'dest_email' => $dest_email,
             'file' => $file,
