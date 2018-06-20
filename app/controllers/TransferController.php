@@ -96,11 +96,17 @@ class TransferController extends Controller {
         $fake_file = dirname(__FILE__,2).'/transfers/'.$transfer->fake_path;
         $file = $transfer->path;
         $mime = mime_content_type($fake_file);
-        // var_dump($mime); 
+        $filesize = filesize($fake_file);
+
+        //var_dump($filesize);die(); 
         header('Content-Description: File Transfer');
         header('Content-Type:'.$mime.'');
         header('Content-Disposition: attachment; filename='.basename($file));
         header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Pragma: public');
+        header('Content-Length:'.$filesize);
         ob_clean();
         flush();
         readfile($fake_file);
