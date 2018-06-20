@@ -1,22 +1,30 @@
 {% extends "base.html.twig" %} 
 
 {% block content %}
-    <h1>Envoyer un fichier à qui vous voulez</h1>
-
+    <div class="row">
+    <h1 class="">Envoyer un fichier à qui vous voulez</h1>
+    </div>
 
 
     <form method="POST" action="{{ url('add') }}" enctype="multipart/form-data">
-        <div class="form-row">
-            <div class="col">
+
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
                 <input type="email" name="exp_email" class="form-control" placeholder="Votre email">
             </div>
-            <div class="col">
+        </div>
+        <div class="row">
+                <div class="col-md-4 offset-md-4">
                 <input type="email" name="dest_email" class="form-control" placeholder="Email du destinataire">
+                </div>
             </div>
-            <div class="col">
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
                <textarea class="form-control" name="message" rows="3" placeholder="Votre message (facultatif)"></textarea>
             </div>
-            <div class="col">
+        </div>
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
                 <div style="position:relative;">
                     <a class='btn btn-secondary' href='javascript:;'>
                         Parcourir...
@@ -26,10 +34,13 @@
                     <span class='label label-info' id="upload-file-info"></span>
                 </div>
             </div>
-            <div class="col">
+        </div>
+        <div class="row">
+            <div class="col-md-2 offset-md-5">
                 <input type="submit" name="upload" class="form-control btn-success" value="Envoyer">
             </div>
         </div>
+    </form>
     </form>
 
 {% endblock %}
