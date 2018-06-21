@@ -13,6 +13,10 @@
             .row{
                 padding-bottom: 2%;
             }
+            .test{
+
+
+            }
             </style>
             <link rel="stylesheet" href="{{ url('assets/css/main.css') }}">
         {% endblock %}
@@ -24,9 +28,12 @@
     {% include "partials/navbar.html.twig" %}
     
     <div class="container">
-        {% include "partials/flashbag.html.twig" %}
+      
         
         {% block content %}{% endblock %}
+
+      {% include "partials/flashbag.html.twig" %}
+      
     </div>
 
     {% block javascripts %}
