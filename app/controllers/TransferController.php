@@ -10,8 +10,11 @@ class TransferController extends Controller {
 
     public function index($page = "1") 
     {
-
-        echo $this->twig->render('transfers/index.html.twig');
+    $size_max = 524288000;
+    echo $this->twig->render('transfers/index.html.twig',[
+    'size_max' => $this::formatBytes($size_max)
+    ]);
+    echo $this->twig->render('transfers/index.html.twig');
     }
 
 

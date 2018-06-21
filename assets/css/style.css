@@ -124,7 +124,7 @@ form {
     justify-content: center;
     position: absolute;
     text-align: center;
-    top: 95px;
+    top: 68px;
     left: 141px;
     width: 100px;
     z-index: 900;
@@ -157,6 +157,7 @@ input.form-file {
     vertical-align: middle;
     border: 2px solid #F2C5B0;
     cursor: pointer;
+    overflow: hidden;
 }
 
 .col {
@@ -222,6 +223,7 @@ input.form-control.btn-success:hover {
     top: 60px;
     left: 15px;
     width: 350px;
+    z-index: 900;
 }
 
 .bloc_download {
@@ -230,6 +232,7 @@ input.form-control.btn-success:hover {
     top: 60px;
     left: 15px;
     width: 350px;
+    z-index: 900;
 }
 
 h2 {
@@ -266,6 +269,12 @@ h2 {
 	transform: scale(1.1);
 }
 
+.backOpenEnd {
+    display: block;
+    max-width: 80px;
+    overflow: hidden;
+}
+
 .backgroundTextOpen {
     background: rgba(255, 255, 255, 0.842);
     margin-top: 10px;
@@ -275,9 +284,26 @@ h2 {
     font-family: Arial;
     font-size: 1em;
 }
+.down{
+    margin-top: 10px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;     /** IE6+, Firefox 7+, Opera 11+, Chrome, Safari **/
+    -o-text-overflow: ellipsis;  /** Opera 9 & 10 **/
+    width: 350px; /* note that this width will have to be smaller to see the effect */
+}
+
+a {
+    color: #a84d38 !important;
+}
+
+a:hover{
+    text-decoration: none !important;
+}
 
 .backgroundTextEnd {
-    border: 2px solid rgba(255, 255, 255, 0.842);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.842);
     padding: 1px 8px 1px 8px;
     color: rgba(255, 255, 255, 0.842);
     font-weight: normal;
@@ -287,6 +313,7 @@ h2 {
 
 .bloc_message {
     margin: auto;
+    -moz-appearance: none;
 }
 
 .message {
@@ -294,6 +321,10 @@ h2 {
     font-family: Arial;
     font-size: 0.9em;
     margin: -50px;
+}
+
+h6 {
+    color: white;
 }
 
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////*/

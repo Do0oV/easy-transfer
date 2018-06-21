@@ -11,6 +11,7 @@
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ url('assets/css/main.css') }}">
             <link rel="stylesheet" href="{{ url('assets/css/style.css') }}">
+            <link rel="stylesheet" media="screen and (max-width: 637px)" href="{{ url('assets/css/media.css') }}"/>
         {% endblock %}
         
         <title>{% block title %}Easy Transfer{% endblock %}</title>
@@ -21,7 +22,7 @@
 <header>
     <div class="bloc_titre">
             <div class="titre">
-                <p><span class="lettrYellow">E</span>asy<span class="lettrYellow">T</span>ransfer</p>
+               <p> <a href="{{ url ('') }}"><span class="lettrYellow">E</span>asy<span class="lettrYellow">T</span>ransfer</a></p>
             </div>
         <div class="soulign">
             <p>u</p>

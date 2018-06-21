@@ -1,43 +1,33 @@
 {% extends "base.html.twig" %} 
 
 {% block content %}
-{#     <h1>Titre</h1>
 
-    <div class="jumbotron">
-        <p>Le fichier: {{ file }}</p>
-        <p>Taille: {{ size }}</p>
-        <p>a été envoyé à:  {{ dest_email }}</p>
-        <p>Celui-ci a été averti par email.</p>
-        <p>Au cas où, voici le lien de téléchargement:</p>
-		<a class="btn btn-primary" href="{{ url('download/') ~ fake}}" role="button">Télécharger</a>
-    </div> #}
-
-<div class="row">
+    <div class="row">
 
         <div class="col-12 col-sm-12 col-md-2 col-lg-2"></div>
 
-            <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                <div class="bloc_central">
-                    <div class="cercle">
-                        <div class="test">
-                            <div class="losange"></div>
+        <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+            <div class="bloc_central">
+                <div class="cercle">
+                    <div class="test">
+                        <div class="losange"></div>
 
-                            <div class="bloc_success">
+                        <div class="bloc_success">
 
-                                <p><h2>Envoyé avec succès !</h2><br>
-                                <span class="backgroundTextOpen">Fichier :</span><span class="backgroundTextEnd">{{ file }}</span><br><br>
-                                <span class="backgroundTextOpen">A :</span><span class="backgroundTextEnd">{{ dest_email }}</span><br><br>
-                                <h2>Un email lui a été envoyé.</p>
-                                <a href="{{ url('download/') ~ fake}}"><button class="btnDownload">Télécharger</button></a>
+                            <p><h2>Envoyé avec succès !</h2></p>
+                            <p class="down"><span class="backgroundTextOpen">Fichier :</span><span class="backgroundTextEnd" data-toggle="tooltip" title="{{ file }}">{{ file }}</span></p>
+                            <span class="backgroundTextOpen">A :</span><span class="backgroundTextEnd">{{ dest_email }}</span><br><br>
+                        </p><h2>Un email lui a été envoyé.</h2></p>
+                        <a href="{{ url('download/') ~ fake}}"><button class="btnDownload">Télécharger</button></a>
 
-                            </div>
-
-                        </div>
                     </div>
+
                 </div>
             </div>
-                            <div class="col-12 col-sm-12 col-md-2 col-lg-2"></div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-2 col-lg-2"></div>
 
-                        </div>
-    
+</div>
+
 {% endblock %}
