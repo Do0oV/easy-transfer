@@ -56,10 +56,6 @@ class TransferController extends Controller {
                     $this->sendeMailDest($exp_email, $dest_email, $file, $this::formatBytes($size_file), $fake, $message);
                     $this->sendeMailExp($exp_email, $dest_email, $file, $this::formatBytes($size_file), $fake, $message);
 
-                    $this->flashbag->set('alert', [
-                        'type' => 'success',
-                        'msg' => 'Le transfert s\'est déroulé avec succès !'
-                    ]);
                     echo $this->twig->render('transfers/result.html.twig',[
                         'file' => $file,
                         'fake' => $fake,
@@ -69,28 +65,28 @@ class TransferController extends Controller {
 
                     }else{            
                         $this->flashbag->set('alert', [
-                            'type' => 'danger',
+                            'type' => 'warning',
                             'msg' => 'Echec du téléchargement'
                         ]);
                         $this->url->redirect(''); 
                     }
                 }else{
                      $this->flashbag->set('alert', [
-                        'type' => 'danger',
+                        'type' => 'warning',
                         'msg' => 'Fichier trop volumineux'
                     ]);
                      $this->url->redirect(''); 
                 }
             }else{
                 $this->flashbag->set('alert', [
-                'type' => 'danger',
+                'type' => 'warning',
                 'msg' => 'Format email invalide'
                 ]);
                 $this->url->redirect('');
                 }
         }else{
             $this->flashbag->set('alert', [
-                'type' => 'danger',
+                'type' => 'warning',
                 'msg' => 'Merci de remplir tous les champs'
             ]);
             $this->url->redirect('');
@@ -132,7 +128,7 @@ class TransferController extends Controller {
         $headers    .= "Content-type: text/html; charset= utf-8\n";
         $subject = 'Easy Transfer: On vous invite à télécharger un fichier';
 
-        $bodyHtml = $this->twig->render('emails/dest_email.html.twig', [
+        $bodyHtml = $this->twig->parse('emails/dest_email.html.twig', [
             'exp_email' => $exp_email,
             'dest_email' => $dest_email,
             'file' => $file,
@@ -154,7 +150,7 @@ class TransferController extends Controller {
         $headers    .= "Content-type: text/html; charset= utf-8\n";
         $subject = 'Easy Transfer: Votre invitation a été envoyée à '.$dest_email.'';
 
-        $bodyHtml = $this->twig->render('emails/exp_email.html.twig', [
+        $bodyHtml = $this->twig->parse('emails/exp_email.html.twig', [
             'exp_email' => $exp_email,
             'dest_email' => $dest_email,
             'file' => $file,
