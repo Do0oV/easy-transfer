@@ -36,6 +36,7 @@ class TransferController extends Controller {
                     $fake= $fakeId.$id;
                     $this->sendeMailDest($exp_email, $dest_email, $file, $this::formatBytes($size_file), $fake, $message);
                     $this->sendeMailExp($exp_email, $dest_email, $file, $this::formatBytes($size_file), $fake, $message);
+
                     echo $this->twig->render('transfers/result.html.twig',[
                         'file' => $file,
                         'fake' => $fake,
