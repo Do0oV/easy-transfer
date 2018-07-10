@@ -1,11 +1,11 @@
 {
-    "name": "synyster0fa7x/mvc-skeleton",
+    "name": "Easy-transfer",
     "type": "project",
     "license": "MIT",
     "authors": [
         {
-            "name": "Anthony Tournier",
-            "email": "anthony.tournier25@gmail.com"
+            "name": "multi",
+            "email": "no@mail.com"
         }
     ],
     "require": {
